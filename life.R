@@ -23,6 +23,40 @@ shift.down <- function(m)
     rbind(rep(0, ncol(m)), m)
 }
 
+zero.borders <- function(m)
+{
+    m[1, ] <- 0
+    m[, 1] <- 0
+    m[nrow(m), ] <- 0
+    m[, ncol(m)] <- 0
+
+    m
+}
+
+calculate.neighbors <- function(m)
+{
+    shifted.up <- shift.up(m)
+    shifted.down <- shift.down(m)
+    
+    neighbors <- 
+        shift.left(shifted.up) + shifted.up + shift.right(shifted.up) +
+        shift.left(m) + shift.right(m) +
+        shift.left(shifted.down) + shifted.down + shift.right(shifted.down)
+
+    neighbors    
+}
+
+calculate.generation <- function(cur.gen)
+{
+    neighbors <- calculate.neighbors(cur.gen)
+    
+    remaining <- neighbors == 2
+    creating <- neighbors == 3
+    
+    next.gen <- (cur.gen * remaining) + creating
+    zero.borders(next.gen)
+}
+
 # Main function:
 life <- function(size, ngen = 1000, update.freq = 10)
 {
@@ -31,15 +65,10 @@ life <- function(size, ngen = 1000, update.freq = 10)
     cols <- size + 2
     
     board <- matrix(data = rbinom(rows * cols, 1, 0.5), nrow = rows, ncol = cols)
+    board <- zero.borders(board)
 
     for(gen in 1:ngen)
     {
-        # 'Zero' the borders of the grid:
-        board[1, ] <- 0
-        board[, 1] <- 0
-        board[rows, ] <- 0
-        board[, cols] <- 0
-        
         # Plotting the grid is quite slow; to speed things up, 
         # the plot is refreshed every update.freq generations:
         if(gen %% update.freq == 0)
@@ -59,19 +88,6 @@ life <- function(size, ngen = 1000, update.freq = 10)
             Sys.sleep(1)
         }
         
-        # Calculate neighbor counts:
-        shifted.up <- shift.up(board)
-        shifted.down <- shift.down(board)
-        
-        neighbors <- 
-            shift.left(shifted.up) + shifted.up + shift.right(shifted.up) +
-            shift.left(board) + shift.right(board) +
-            shift.left(shifted.down) + shifted.down + shift.right(shifted.down)
-            
-        remaining <- neighbors == 2
-        creating <- neighbors == 3
-
-        # Calculate new generation:
-        board <- (board * remaining) + creating
+        board <- calculate.generation(board)
     }
 }
