@@ -60,14 +60,14 @@ life <- function(size, ngen = 1000, update.freq = 10)
         }
         
         # Calculate neighbor counts:
-        shifted.left <- shift.left(board)
-        shifted.right <- shift.right(board)
+        shifted.up <- shift.up(board)
+        shifted.down <- shift.down(board)
         
         neighbors <- 
-            shift.up(shifted.left) + shift.up(board) + shift.up(shifted.right) +
-            shifted.left + shifted.right +
-            shift.down(shifted.left) + shift.down(board) + shift.down(shifted.right)
-        
+            shift.left(shifted.up) + shifted.up + shift.right(shifted.up) +
+            shift.left(board) + shift.right(board) +
+            shift.left(shifted.down) + shifted.down + shift.right(shifted.down)
+            
         remaining <- neighbors == 2
         creating <- neighbors == 3
 
