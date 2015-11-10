@@ -23,16 +23,6 @@ shift.down <- function(m)
     rbind(rep(0, ncol(m)), m)
 }
 
-zero.borders <- function(m)
-{
-    m[1, ] <- 0
-    m[, 1] <- 0
-    m[nrow(m), ] <- 0
-    m[, ncol(m)] <- 0
-
-    m
-}
-
 calculate.neighbors <- function(m)
 {
     shifted.up <- shift.up(m)
@@ -54,18 +44,12 @@ calculate.generation <- function(cur.gen)
     creating <- neighbors == 3
     
     next.gen <- (cur.gen * remaining) + creating
-    zero.borders(next.gen)
 }
 
 # Main function:
 life <- function(size, ngen = 1000, update.freq = 10)
 {
-    # Two additional rows and columns will be used to 'zero' the grid at its borders:
-    rows <- size + 2
-    cols <- size + 2
-    
-    board <- matrix(data = rbinom(rows * cols, 1, 0.5), nrow = rows, ncol = cols)
-    board <- zero.borders(board)
+    board <- matrix(data = rbinom(size * size, 1, 0.5), nrow = size, ncol = size)
 
     for(gen in 1:ngen)
     {
@@ -73,16 +57,16 @@ life <- function(size, ngen = 1000, update.freq = 10)
         # the plot is refreshed every update.freq generations:
         if(gen %% update.freq == 0)
         {
-            rowindexes <- board * row(board)
-            colindexes <- board * col(board)
+            row.indexes <- board * row(board)
+            col.indexes <- board * col(board)
             
-            rowindexes <- as.list(rowindexes)[rowindexes > 0]
-            colindexes <- as.list(colindexes)[colindexes > 0]
+            row.indexes <- as.list(row.indexes)[row.indexes > 0]
+            col.indexes <- as.list(col.indexes)[col.indexes > 0]
             
-            plot(colindexes, 
-                 rowindexes, 
-                 xlim = c(2, rows - 1), 
-                 ylim = c(2, cols - 1), 
+            plot(col.indexes, 
+                 row.indexes, 
+                 xlim = c(1, nrow(board)), 
+                 ylim = c(1, ncol(board)), 
                  pch = 20, 
                  main = paste(c("Generation", gen)))
             Sys.sleep(1)

@@ -40,16 +40,6 @@ test.shift.down <- function()
     checkEquals(target, current)
 }
 
-test.zero.borders <- function()
-{
-    m <- matrix(1:12, 4, 3)
-    
-    current <- zero.borders(m)
-    target <- matrix((c(rep(0, 4), 0, 6, 7, 0, rep(0, 4))), 4, 3)
-
-    checkEquals(target, current)
-}
-
 test.calculate.neighbors <- function()
 {
     m <- matrix(c(1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0), 4, 3)
