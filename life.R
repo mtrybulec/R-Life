@@ -1,4 +1,5 @@
-# Helper matrix functions:
+# Matrix helper functions:
+
 shift.left <- function(m)
 {
     m <- m[, 2:ncol(m)]
@@ -23,14 +24,16 @@ shift.down <- function(m)
     rbind(rep(0, ncol(m)), m)
 }
 
-calculate.neighbors <- function(m)
+# Life functions:
+
+calculate.neighbors <- function(board)
 {
-    shifted.up <- shift.up(m)
-    shifted.down <- shift.down(m)
+    shifted.up <- shift.up(board)
+    shifted.down <- shift.down(board)
     
     neighbors <- 
         shift.left(shifted.up) + shifted.up + shift.right(shifted.up) +
-        shift.left(m) + shift.right(m) +
+        shift.left(board) + shift.right(board) +
         shift.left(shifted.down) + shifted.down + shift.right(shifted.down)
 
     neighbors    
@@ -46,7 +49,27 @@ calculate.generation <- function(cur.gen)
     next.gen <- (cur.gen * remaining) + creating
 }
 
+plot.board <- function(board, gen)
+{
+    row.indexes <- board * row(board)
+    col.indexes <- board * col(board)
+    
+    row.indexes <- as.list(row.indexes)[row.indexes > 0]
+    col.indexes <- as.list(col.indexes)[col.indexes > 0]
+    
+    plot(col.indexes, 
+         row.indexes, 
+         xlim = c(1, nrow(board)), 
+         ylim = c(1, ncol(board)), 
+         pch = 20, 
+         main = paste(c("Generation", gen)))
+    
+    # Forces a refresh of the plot:
+    Sys.sleep(1)
+}
+
 # Main function:
+
 life <- function(size, ngen = 1000, update.freq = 10)
 {
     board <- matrix(data = rbinom(size * size, 1, 0.5), nrow = size, ncol = size)
@@ -57,19 +80,7 @@ life <- function(size, ngen = 1000, update.freq = 10)
         # the plot is refreshed every update.freq generations:
         if(gen %% update.freq == 0)
         {
-            row.indexes <- board * row(board)
-            col.indexes <- board * col(board)
-            
-            row.indexes <- as.list(row.indexes)[row.indexes > 0]
-            col.indexes <- as.list(col.indexes)[col.indexes > 0]
-            
-            plot(col.indexes, 
-                 row.indexes, 
-                 xlim = c(1, nrow(board)), 
-                 ylim = c(1, ncol(board)), 
-                 pch = 20, 
-                 main = paste(c("Generation", gen)))
-            Sys.sleep(1)
+            plot.board(board, gen)
         }
         
         board <- calculate.generation(board)
