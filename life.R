@@ -35,18 +35,16 @@ calculate.neighbors <- function(board)
         shift.left(shifted.up) + shifted.up + shift.right(shifted.up) +
         shift.left(board) + shift.right(board) +
         shift.left(shifted.down) + shifted.down + shift.right(shifted.down)
-
-    neighbors    
 }
 
-calculate.generation <- function(cur.gen)
+calculate.generation <- function(board)
 {
-    neighbors <- calculate.neighbors(cur.gen)
+    neighbors <- calculate.neighbors(board)
     
     remaining <- neighbors == 2
     creating <- neighbors == 3
     
-    next.gen <- (cur.gen * remaining) + creating
+    (board * remaining) + creating
 }
 
 plot.board <- function(board, gen)
