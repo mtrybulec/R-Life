@@ -2,25 +2,25 @@
 
 shift.left <- function(m)
 {
-    m <- m[, 2:ncol(m)]
+    m <- m[, -1]
     cbind(m, rep(0, nrow(m)))
 }
 
 shift.right <- function(m)
 {
-    m <- m[, 1:ncol(m) - 1]
+    m <- m[, -ncol(m)]
     cbind(rep(0, nrow(m)), m)
 }
 
 shift.up <- function(m)
 {
-    m <- m[2:nrow(m), ]
+    m <- m[-1, ]
     rbind(m, rep(0, ncol(m)))
 }
 
 shift.down <- function(m)
 {
-    m <- m[1:nrow(m) - 1, ]
+    m <- m[-nrow(m), ]
     rbind(rep(0, ncol(m)), m)
 }
 
