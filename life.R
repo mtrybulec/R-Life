@@ -59,6 +59,8 @@ plot.board <- function(board, gen)
          row.indexes, 
          xlim = c(1, nrow(board)), 
          ylim = c(1, ncol(board)), 
+         xlab = "",
+         ylab = "",
          pch = 20, 
          main = paste(c("Generation", gen)))
     
