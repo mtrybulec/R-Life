@@ -55,14 +55,17 @@ plot.board <- function(board, gen)
     row.indexes <- as.list(row.indexes)[row.indexes > 0]
     col.indexes <- as.list(col.indexes)[col.indexes > 0]
     
-    plot(col.indexes, 
-         row.indexes, 
-         xlim = c(1, nrow(board)), 
-         ylim = c(1, ncol(board)), 
-         xlab = "",
-         ylab = "",
-         pch = 20, 
-         main = paste(c("Generation", gen)))
+    smoothScatter(
+        col.indexes, 
+        row.indexes, 
+        xlim = c(1, nrow(board)), 
+        ylim = c(1, ncol(board)), 
+        xlab = "",
+        ylab = "",
+        pch = 20, 
+        main = paste(c("Generation", gen)),
+        nrpoints = 0)
+    points(col.indexes, row.indexes, pch = 20)
     
     # Forces a refresh of the plot:
     Sys.sleep(1)
