@@ -64,9 +64,8 @@ plot.board <- function(board, gen)
         ylab = "",
         pch = 20, 
         main = paste(c("Generation", gen)),
-        nrpoints = 0)
-    points(col.indexes, row.indexes, pch = 20)
-    
+        nrpoints = Inf)
+
     # Forces a refresh of the plot:
     Sys.sleep(1)
 }
