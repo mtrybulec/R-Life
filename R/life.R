@@ -76,7 +76,7 @@ plot.board <- function(board, gen)
 #'
 #' \code{life} runs Conway's Game of Life, using standard rules.
 #'
-#' @param size (numeric) the size of the board (its side).
+#' @param size (numeric) the size of the board (the length of its sides).
 #' @param ngen (numeric) the number of generations to run.
 #' @param update.freq (numeric) specifies the number of generations
 #'    between plot updates (since plot updates are by far the slowest here,
@@ -85,6 +85,10 @@ plot.board <- function(board, gen)
 #' @export
 life <- function(size, ngen = 1000, update.freq = 10)
 {
+    if (missing(size)) {
+        stop("size argument missing - specify the size of the board (the length of its sides).")
+    }
+
     board <- matrix(data = rbinom(size * size, 1, 0.5), nrow = size, ncol = size)
 
     for(gen in 1:ngen)
