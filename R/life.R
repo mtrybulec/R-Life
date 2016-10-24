@@ -64,6 +64,7 @@ plot.board <- function(board, gen)
         ylab = "",
         pch = 20,
         main = paste(c("Generation", gen)),
+        bandwidth = 2,
         nrpoints = Inf)
 
     # Forces a refresh of the plot:

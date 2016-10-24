@@ -7,7 +7,7 @@
 life(size, ngen = 1000, update.freq = 10)
 }
 \arguments{
-\item{size}{(numeric) the size of the board (its side).}
+\item{size}{(numeric) the size of the board (the length of its sides).}
 
 \item{ngen}{(numeric) the number of generations to run.}
 
