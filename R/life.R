@@ -1,33 +1,28 @@
 # Matrix helper functions:
 
-shift.left <- function(m)
-{
+shift.left <- function(m) {
     m <- m[, -1]
     cbind(m, rep(0, nrow(m)))
 }
 
-shift.right <- function(m)
-{
+shift.right <- function(m) {
     m <- m[, -ncol(m)]
     cbind(rep(0, nrow(m)), m)
 }
 
-shift.up <- function(m)
-{
+shift.up <- function(m) {
     m <- m[-1, ]
     rbind(m, rep(0, ncol(m)))
 }
 
-shift.down <- function(m)
-{
+shift.down <- function(m) {
     m <- m[-nrow(m), ]
     rbind(rep(0, ncol(m)), m)
 }
 
 # Life functions:
 
-calculate.neighbors <- function(board)
-{
+calculate.neighbors <- function(board) {
     shifted.up <- shift.up(board)
     shifted.down <- shift.down(board)
 
@@ -37,8 +32,7 @@ calculate.neighbors <- function(board)
         shift.left(shifted.down) + shifted.down + shift.right(shifted.down)
 }
 
-calculate.generation <- function(board)
-{
+calculate.generation <- function(board) {
     neighbors <- calculate.neighbors(board)
 
     remaining <- neighbors == 2
@@ -47,8 +41,7 @@ calculate.generation <- function(board)
     (board * remaining) + creating
 }
 
-plot.board <- function(board, gen)
-{
+plot.board <- function(board, gen) {
     row.indexes <- board * row(board)
     col.indexes <- board * col(board)
 
@@ -65,7 +58,8 @@ plot.board <- function(board, gen)
         pch = 20,
         main = paste(c("Generation", gen)),
         bandwidth = 2,
-        nrpoints = Inf)
+        nrpoints = Inf
+    )
 
     # Forces a refresh of the plot:
     Sys.sleep(1)
@@ -84,20 +78,17 @@ plot.board <- function(board, gen)
 #'    plotting results too often can become quite slow).
 #'
 #' @export
-life <- function(size, ngen = 1000, update.freq = 10)
-{
+life <- function(size, ngen = 1000, update.freq = 10) {
     if (missing(size)) {
         stop("size argument missing - specify the size of the board (the length of its sides).")
     }
 
     board <- matrix(data = rbinom(size * size, 1, 0.5), nrow = size, ncol = size)
 
-    for(gen in 1:ngen)
-    {
+    for(gen in 1:ngen) {
         # Plotting the grid is quite slow; to speed things up,
         # the plot is refreshed every update.freq generations:
-        if(gen %% update.freq == 0)
-        {
+        if(gen %% update.freq == 0) {
             plot.board(board, gen)
         }
 
