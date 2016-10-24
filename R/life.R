@@ -30,8 +30,8 @@ calculate.neighbors <- function(board)
 {
     shifted.up <- shift.up(board)
     shifted.down <- shift.down(board)
-    
-    neighbors <- 
+
+    neighbors <-
         shift.left(shifted.up) + shifted.up + shift.right(shifted.up) +
         shift.left(board) + shift.right(board) +
         shift.left(shifted.down) + shifted.down + shift.right(shifted.down)
@@ -40,10 +40,10 @@ calculate.neighbors <- function(board)
 calculate.generation <- function(board)
 {
     neighbors <- calculate.neighbors(board)
-    
+
     remaining <- neighbors == 2
     creating <- neighbors == 3
-    
+
     (board * remaining) + creating
 }
 
@@ -51,18 +51,18 @@ plot.board <- function(board, gen)
 {
     row.indexes <- board * row(board)
     col.indexes <- board * col(board)
-    
+
     row.indexes <- as.list(row.indexes)[row.indexes > 0]
     col.indexes <- as.list(col.indexes)[col.indexes > 0]
-    
+
     smoothScatter(
-        col.indexes, 
-        row.indexes, 
-        xlim = c(1, nrow(board)), 
-        ylim = c(1, ncol(board)), 
+        col.indexes,
+        row.indexes,
+        xlim = c(1, nrow(board)),
+        ylim = c(1, ncol(board)),
         xlab = "",
         ylab = "",
-        pch = 20, 
+        pch = 20,
         main = paste(c("Generation", gen)),
         nrpoints = Inf)
 
@@ -72,19 +72,24 @@ plot.board <- function(board, gen)
 
 # Main function:
 
+#' Run life.
+#'
+#' Runs the life algorithm.
+#'
+#' @export
 life <- function(size, ngen = 1000, update.freq = 10)
 {
     board <- matrix(data = rbinom(size * size, 1, 0.5), nrow = size, ncol = size)
 
     for(gen in 1:ngen)
     {
-        # Plotting the grid is quite slow; to speed things up, 
+        # Plotting the grid is quite slow; to speed things up,
         # the plot is refreshed every update.freq generations:
         if(gen %% update.freq == 0)
         {
             plot.board(board, gen)
         }
-        
+
         board <- calculate.generation(board)
     }
 }

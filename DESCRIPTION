@@ -1,0 +1,9 @@
+Package: life
+Title: Conway's Game of Life in R
+Version: 0.1.0
+Date: 2016-10-24
+Author: Michal Trybulec
+Maintainer: Michal Trybulec <mtrybulec@yac.com.pl>
+Description: Conway's Game of Life in R
+License: MIT
+RoxygenNote: 5.0.1
