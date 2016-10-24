@@ -2,11 +2,20 @@
 % Please edit documentation in R/life.R
 \name{life}
 \alias{life}
-\title{Run life.}
+\title{Run Conway's Game of Life.}
 \usage{
 life(size, ngen = 1000, update.freq = 10)
 }
+\arguments{
+\item{size}{(numeric) the size of the board (its side).}
+
+\item{ngen}{(numeric) the number of generations to run.}
+
+\item{update.freq}{(numeric) specifies the number of generations
+between plot updates (since plot updates are by far the slowest here,
+plotting results too often can become quite slow).}
+}
 \description{
-Runs the life algorithm.
+\code{life} runs Conway's Game of Life, using standard rules.
 }
 

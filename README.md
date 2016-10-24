@@ -1,8 +1,8 @@
 # life
-Conway's Game of Life in R
+Conway's Game of Life, in R.
 
 Just playing with matrices in R... :-)
 
-Source life.R and then execute the life() function to run Life.
+Install the package, then execute life() to start.
 
 Source runTests.R to execute unit tests (requires the RUnit package).

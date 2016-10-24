@@ -72,9 +72,15 @@ plot.board <- function(board, gen)
 
 # Main function:
 
-#' Run life.
+#' Run Conway's Game of Life.
 #'
-#' Runs the life algorithm.
+#' \code{life} runs Conway's Game of Life, using standard rules.
+#'
+#' @param size (numeric) the size of the board (its side).
+#' @param ngen (numeric) the number of generations to run.
+#' @param update.freq (numeric) specifies the number of generations
+#'    between plot updates (since plot updates are by far the slowest here,
+#'    plotting results too often can become quite slow).
 #'
 #' @export
 life <- function(size, ngen = 1000, update.freq = 10)
